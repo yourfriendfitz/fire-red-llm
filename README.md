@@ -1,3 +1,22 @@
+# FireRed LLM Gym Challenge
+
+This fork is for a focused Pokemon FireRed ROM hack where an external AI controller attempts to clear Pewter City Gym while the user watches.
+
+Project docs:
+
+- [spec.md](spec.md): product scope, architecture, milestones, and MVP definition of done.
+- [docs/development.md](docs/development.md): branch-per-milestone workflow and container-first development rules.
+- [docs/milestone-0.md](docs/milestone-0.md): repo foundation milestone.
+- [docs/milestone-1.md](docs/milestone-1.md): containerized ROM build milestone.
+
+Current verification:
+
+```bash
+make milestone0-check
+```
+
+The repository must not include copyrighted base ROMs or generated ROM outputs.
+
 # Pokémon FireRed and LeafGreen
 
 This is a decompilation of English Pokémon FireRed and LeafGreen.
