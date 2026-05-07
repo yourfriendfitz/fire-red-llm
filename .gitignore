@@ -66,3 +66,10 @@ build-cmake-*/
 .cache/
 CMakeLists.txt
 compile_commands.json
+
+# Local planning notes
+pre-spec.md
+clarifying-questions*.md
+AGENTS.md
+docs/decisions.md
+.agent/
