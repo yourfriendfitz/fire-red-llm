@@ -32,6 +32,7 @@ Expected final verification:
 
 ```bash
 make milestone1-check
+git diff --check origin/master...HEAD
 git diff --check
 ```
 

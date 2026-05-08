@@ -28,6 +28,7 @@ Use the same working shape as `yourfriendfitz/support-ticket-llm`:
 
 ## Verification
 - make milestoneN-check
+- git diff --check origin/master...HEAD
 - git diff --check
 ```
 
@@ -74,6 +75,8 @@ Until Milestone 1 is complete, the only checked target is:
 ```bash
 make milestone0-check
 ```
+
+Milestone checks should avoid touching ROM build artifacts unless that milestone explicitly verifies a ROM build.
 
 ## Base ROM Handling
 

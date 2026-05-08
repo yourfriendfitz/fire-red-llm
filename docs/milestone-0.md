@@ -36,7 +36,10 @@ This checks:
 - project planning docs exist,
 - milestone docs exist,
 - `origin` and `upstream` remotes are configured,
-- `git diff --check` passes.
+- the committed PR diff passes `git diff --check origin/master...HEAD`,
+- the local working tree diff passes `git diff --check`.
+
+`milestone0-check` must not create ROM build directories or other ignored build artifacts.
 
 ## Milestone 1 Follow-Up
 

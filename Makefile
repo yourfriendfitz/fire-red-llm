@@ -193,7 +193,9 @@ OBJS     := $(C_OBJS) $(C_ASM_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(SONG_OBJS) $(
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
 
 SUBDIRS  := $(sort $(dir $(OBJS)))
+ifeq ($(SETUP_PREREQS),1)
 $(shell mkdir -p $(SUBDIRS))
+endif
 
 # Pretend rules that are actually flags defer to `make all`
 modern: all
@@ -406,4 +408,5 @@ milestone0-check:
 	test -f docs/milestone-1.md
 	git remote get-url origin
 	git remote get-url upstream
+	git diff --check origin/master...HEAD
 	git diff --check
