@@ -7,6 +7,7 @@ Make the ROM itself launch into a deterministic Pewter Gym challenge after New G
 ## Delivered Items
 
 - New Game now initializes the challenge and warps directly to Pewter Gym.
+- New Game skips the vanilla Oak speech controls guide and intro sequence.
 - The player receives two seeded, random level-14 Pokemon from a curated non-legendary pool.
 - Generated Pokemon receive seeded passive held items.
 - The title-screen Help System is disabled so smoke tests cannot get trapped before New Game.

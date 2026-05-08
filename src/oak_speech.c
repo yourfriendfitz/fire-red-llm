@@ -687,8 +687,7 @@ void StartNewGameScene(void)
 {
     gPlttBufferUnfaded[0] = RGB_BLACK;
     gPlttBufferFaded[0]   = RGB_BLACK;
-    CreateTask(Task_NewGameScene, 0);
-    SetMainCallback2(CB2_NewGameScene);
+    SetMainCallback2(CB2_NewGame);
 }
 
 #define tSpriteTimer                data[0]
