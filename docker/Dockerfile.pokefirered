@@ -1,0 +1,21 @@
+FROM ubuntu:24.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        binutils-arm-none-eabi \
+        build-essential \
+        ca-certificates \
+        gcc-multilib \
+        git \
+        libpng-dev \
+        make \
+        perl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+
+ENV HOME=/tmp
+
+CMD ["bash"]

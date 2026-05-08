@@ -1,0 +1,10 @@
+services:
+  rom-build:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pokefirered
+    environment:
+      HOME: /tmp
+    volumes:
+      - .:/workspace
+    working_dir: /workspace

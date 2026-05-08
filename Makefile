@@ -1,5 +1,7 @@
 include config.mk
 
+DOCKER_COMPOSE ?= docker compose
+
 # Default make rule
 all: rom
 
@@ -132,7 +134,7 @@ MAKEFLAGS += --no-print-directory
 ALL_BUILDS := firered firered_rev1 firered_rev10 leafgreen leafgreen_rev1 leafgreen_rev10
 ALL_BUILDS += $(ALL_BUILDS:%=%_modern)
 
-RULES_NO_SCAN += clean clean-assets tidy generated clean-generated milestone0-check
+RULES_NO_SCAN += clean clean-assets tidy generated clean-generated compose-config rom-shell rom-build milestone0-check milestone1-check
 .PHONY: all rom modern compare $(ALL_BUILDS) $(ALL_BUILDS:%=compare_%)
 .PHONY: $(RULES_NO_SCAN)
 
@@ -408,5 +410,24 @@ milestone0-check:
 	test -f docs/milestone-1.md
 	git remote get-url origin
 	git remote get-url upstream
+	git diff --check origin/master...HEAD
+	git diff --check
+
+compose-config:
+	$(DOCKER_COMPOSE) config
+
+rom-shell:
+	$(DOCKER_COMPOSE) run --rm rom-build bash
+
+rom-build:
+	$(DOCKER_COMPOSE) run --rm rom-build ./scripts/build-rom.sh
+
+milestone1-check: compose-config
+	test -f docker/Dockerfile.pokefirered
+	test -f compose.yaml
+	test -f scripts/ensure-agbcc.sh
+	test -f scripts/build-rom.sh
+	$(DOCKER_COMPOSE) build rom-build
+	$(DOCKER_COMPOSE) run --rm rom-build ./scripts/build-rom.sh
 	git diff --check origin/master...HEAD
 	git diff --check

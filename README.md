@@ -12,10 +12,10 @@ Project docs:
 Current verification:
 
 ```bash
-make milestone0-check
+make milestone1-check
 ```
 
-The repository must not include copyrighted base ROMs or generated ROM outputs.
+The upstream decompilation builds from source. Do not commit generated ROM outputs or any local ROM files.
 
 # Pokémon FireRed and LeafGreen
 

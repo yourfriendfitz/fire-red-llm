@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-The repository is in Milestone 0. The GitHub fork exists, the product spec is written, and the next implementation milestone is a containerized vanilla ROM build.
+The repository is in Milestone 1. The current work is a containerized vanilla ROM build.
 
 Current workflow goals:
 
@@ -68,25 +68,34 @@ Milestone 1 should provide a container workflow for:
 - building or installing `agbcc`,
 - running the vanilla ROM build,
 - emitting predictable build artifacts,
-- failing clearly when the user-provided base ROM is missing.
+- comparing the generated ROM to the upstream expected hash.
 
-Until Milestone 1 is complete, the only checked target is:
+Milestone 1 verification target:
 
 ```bash
-make milestone0-check
+make milestone1-check
 ```
+
+Useful container targets:
+
+```bash
+make rom-build
+make rom-shell
+```
+
+`make rom-build` installs the pinned `agbcc` toolchain if needed, runs upstream `make compare`, and verifies the generated `pokefirered.gba` hash.
 
 Milestone checks should avoid touching ROM build artifacts unless that milestone explicitly verifies a ROM build.
 
-## Base ROM Handling
+## ROM Artifact Handling
 
-This repository must not contain copyrighted base ROM files.
+The upstream `pret/pokefirered` decompilation builds from source and does not require a user-provided base ROM.
 
-Expected behavior for Milestone 1:
+Expected behavior:
 
-- The user supplies a local FireRed base ROM.
-- The file location is documented and ignored by git.
-- Missing or invalid base ROM input produces a clear error.
+- Generated ROM outputs remain local build artifacts.
 - Generated `.gba`, `.elf`, `.map`, and `.sym` outputs remain ignored.
+- Generated build intermediates under `build/`, `tools/agbcc/`, and `third_party/agbcc/` remain local.
+- Local ROM files must not be committed.
 
 The upstream `.gitignore` already ignores `*.gba` except data assets that belong to source.
