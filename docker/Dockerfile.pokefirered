@@ -11,6 +11,7 @@ RUN apt-get update \
         git \
         libpng-dev \
         make \
+        pkg-config \
         perl \
     && rm -rf /var/lib/apt/lists/*
 

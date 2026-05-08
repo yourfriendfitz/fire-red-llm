@@ -5,6 +5,7 @@ services:
       dockerfile: docker/Dockerfile.pokefirered
     environment:
       HOME: /tmp
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     volumes:
       - .:/workspace
     working_dir: /workspace

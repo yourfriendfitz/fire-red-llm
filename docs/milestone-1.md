@@ -44,6 +44,8 @@ make rom-build
 
 Runs the containerized FireRed build workflow. It fetches pinned `pret/agbcc` source under `third_party/agbcc`, installs the compiler into the upstream `tools/agbcc` path, and runs `make compare`.
 
+The Makefile passes the current host UID/GID into Compose by default so generated bind-mounted files remain writable by the local user.
+
 ```bash
 make rom-shell
 ```

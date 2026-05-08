@@ -1,6 +1,9 @@
 include config.mk
 
 DOCKER_COMPOSE ?= docker compose
+HOST_UID ?= $(shell id -u)
+HOST_GID ?= $(shell id -g)
+DOCKER_COMPOSE_WITH_HOST = HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) $(DOCKER_COMPOSE)
 
 # Default make rule
 all: rom
@@ -414,20 +417,20 @@ milestone0-check:
 	git diff --check
 
 compose-config:
-	$(DOCKER_COMPOSE) config
+	$(DOCKER_COMPOSE_WITH_HOST) config
 
 rom-shell:
-	$(DOCKER_COMPOSE) run --rm rom-build bash
+	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build bash
 
 rom-build:
-	$(DOCKER_COMPOSE) run --rm rom-build ./scripts/build-rom.sh
+	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build ./scripts/build-rom.sh
 
 milestone1-check: compose-config
 	test -f docker/Dockerfile.pokefirered
 	test -f compose.yaml
 	test -f scripts/ensure-agbcc.sh
 	test -f scripts/build-rom.sh
-	$(DOCKER_COMPOSE) build rom-build
-	$(DOCKER_COMPOSE) run --rm rom-build ./scripts/build-rom.sh
+	$(DOCKER_COMPOSE_WITH_HOST) build rom-build
+	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build ./scripts/build-rom.sh
 	git diff --check origin/master...HEAD
 	git diff --check

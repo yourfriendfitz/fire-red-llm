@@ -85,6 +85,8 @@ make rom-shell
 
 `make rom-build` installs the pinned `agbcc` toolchain if needed, runs upstream `make compare`, and verifies the generated `pokefirered.gba` hash.
 
+The Makefile passes `HOST_UID` and `HOST_GID` into Compose so files written through the bind mount stay owned by the host user. Override them only when intentionally building as a different host user.
+
 Milestone checks should avoid touching ROM build artifacts unless that milestone explicitly verifies a ROM build.
 
 ## ROM Artifact Handling
