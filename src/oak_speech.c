@@ -798,7 +798,9 @@ static void Task_NewGameScene(u8 taskId)
 
 static void Task_NewGameScene_SkipIntro(u8 taskId)
 {
-    Task_OakSpeech_FreeResources(taskId);
+    // Defer teardown to the next task tick so the scene callback can finish
+    // the current frame before freeing Oak Speech resources.
+    gTasks[taskId].func = Task_OakSpeech_FreeResources;
 }
 
 static void ControlsGuide_LoadPage1(void)
