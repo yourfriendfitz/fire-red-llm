@@ -29,6 +29,7 @@
 #include "berry_powder.h"
 #include "pokemon_jump.h"
 #include "event_scripts.h"
+#include "fire_red_llm_challenge.h"
 
 // this file's functions
 static void ResetMiniGamesResults(void);
@@ -65,7 +66,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
-    gSaveBlock2Ptr->optionsButtonMode = OPTIONS_BUTTON_MODE_HELP;
+    gSaveBlock2Ptr->optionsButtonMode = OPTIONS_BUTTON_MODE_LR;
 }
 
 static void ClearPokedexFlags(void)
@@ -79,9 +80,9 @@ static void ClearBattleTower(void)
     CpuFill32(0, &gSaveBlock2Ptr->battleTower, sizeof(gSaveBlock2Ptr->battleTower));
 }
 
-static void WarpToPlayersRoom(void)
+static void WarpToPewterGymChallenge(void)
 {
-    SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), -1, 6, 6);
+    SetWarpDestination(MAP_GROUP(MAP_PEWTER_CITY_GYM), MAP_NUM(MAP_PEWTER_CITY_GYM), -1, 6, 13);
     WarpIntoMap();
 }
 
@@ -145,8 +146,9 @@ void NewGameInitData(void)
     ResetMiniGamesResults();
     ClearMysteryGift();
     SetAllRenewableItemFlags();
-    WarpToPlayersRoom();
     RunScriptImmediately(EventScript_ResetAllMapFlags);
+    FireRedLLM_InitChallenge();
+    WarpToPewterGymChallenge();
     StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
     ResetTrainerTowerResults();
 }

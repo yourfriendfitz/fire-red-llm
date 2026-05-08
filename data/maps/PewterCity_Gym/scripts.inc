@@ -1,11 +1,28 @@
 PewterCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, PewterCity_Gym_OnFrame
 	.byte 0
+
+PewterCity_Gym_OnFrame::
+	map_script_2 VAR_FIRE_RED_LLM_CHALLENGE_SCENE, FIRE_RED_LLM_CHALLENGE_SCENE_INTRO, PewterCity_Gym_EventScript_ChallengeIntro
+	.2byte 0
+
+PewterCity_Gym_EventScript_ChallengeIntro::
+	lockall
+	setvar VAR_FIRE_RED_LLM_CHALLENGE_SCENE, FIRE_RED_LLM_CHALLENGE_SCENE_SHOWN
+	msgbox PewterCity_Gym_Text_ChallengeIntro
+	releaseall
+	end
 
 PewterCity_Gym_EventScript_Brock::
 	famechecker FAMECHECKER_BROCK, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_BROCK, PewterCity_Gym_Text_BrockIntro, PewterCity_Gym_Text_BrockDefeat, PewterCity_Gym_EventScript_DefeatedBrock, NO_MUSIC
-	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_EventScript_GiveTM39
+	goto_if_set FLAG_FIRE_RED_LLM_CHALLENGE_COMPLETE, PewterCity_Gym_EventScript_BrockChallengeComplete
 	msgbox PewterCity_Gym_Text_BrockPostBattle
+	release
+	end
+
+PewterCity_Gym_EventScript_BrockChallengeComplete::
+	msgbox PewterCity_Gym_Text_ChallengeComplete
 	release
 	end
 
@@ -17,7 +34,9 @@ PewterCity_Gym_EventScript_DefeatedBrock::
 	setflag FLAG_HIDE_PEWTER_CITY_GYM_GUIDE
 	clearflag FLAG_HIDE_PEWTER_CITY_RUNNING_SHOES_GUY
 	set_gym_trainers 1
-	goto PewterCity_Gym_EventScript_GiveTM39
+	special FireRedLLM_CompleteChallenge
+	msgbox PewterCity_Gym_Text_ChallengeComplete
+	release
 	end
 
 PewterCity_Gym_EventScript_GiveTM39::
@@ -37,8 +56,28 @@ PewterCity_Gym_EventScript_NoRoomForTM39::
 
 PewterCity_Gym_EventScript_Liam::
 	trainerbattle_single TRAINER_CAMPER_LIAM, PewterCity_Gym_Text_LiamIntro, PewterCity_Gym_Text_LiamDefeat
+	special FireRedLLM_HealAndEnforceLevelCap
+	msgbox PewterCity_Gym_Text_ChallengeAutoHeal, MSGBOX_AUTOCLOSE
 	msgbox PewterCity_Gym_Text_LiamPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+PewterCity_Gym_EventScript_BlockExit::
+	lockall
+	msgbox PewterCity_Gym_Text_ChallengeExitBlocked
+	applymovement LOCALID_PLAYER, PewterCity_Gym_Movement_BlockExit
+	waitmovement 0
+	releaseall
+	end
+
+FireRedLLM_EventScript_AfterWhiteOutLoss::
+	lockall
+	msgbox PewterCity_Gym_Text_ChallengeLost
+	releaseall
+	end
+
+PewterCity_Gym_Movement_BlockExit::
+	walk_up
+	step_end
 
 PewterCity_Gym_EventScript_GymGuy::
 	lock

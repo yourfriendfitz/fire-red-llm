@@ -1247,10 +1247,10 @@
 #define FLAG_DEFEATED_LANCE           0x4BB
 #define FLAG_DEFEATED_CHAMP           0x4BC
 
-// Unused?
-#define FLAG_0x4BD               0x4BD
-#define FLAG_0x4BE               0x4BE
-#define FLAG_0x4BF               0x4BF
+// FireRed LLM challenge state.
+#define FLAG_FIRE_RED_LLM_CHALLENGE_STARTED  0x4BD
+#define FLAG_FIRE_RED_LLM_CHALLENGE_COMPLETE 0x4BE
+#define FLAG_FIRE_RED_LLM_CHALLENGE_LOST     0x4BF
 #define FLAG_0x4C0               0x4C0
 #define FLAG_0x4C1               0x4C1
 #define FLAG_0x4C2               0x4C2

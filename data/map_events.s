@@ -9,6 +9,7 @@
 #include "constants/trainer_types.h"
 #include "constants/vars.h"
 #include "constants/weather.h"
+#include "constants/fire_red_llm_challenge.h"
     .include "asm/macros.inc"
     .include "constants/constants.inc"
 

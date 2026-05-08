@@ -29,6 +29,7 @@
 #include "event_scripts.h"
 #include "field_weather.h"
 #include "field_specials.h"
+#include "fire_red_llm_challenge.h"
 #include "pokedex_screen.h"
 #include "trainer_card.h"
 #include "option_menu.h"
@@ -212,6 +213,16 @@ static void AppendToStartMenuItems(u8 newEntry)
 
 static void SetUpStartMenu_NormalField(void)
 {
+    if (FireRedLLM_ShouldRestrictStartMenu() == TRUE)
+    {
+        if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
+            AppendToStartMenuItems(STARTMENU_POKEMON);
+        AppendToStartMenuItems(STARTMENU_PLAYER);
+        AppendToStartMenuItems(STARTMENU_OPTION);
+        AppendToStartMenuItems(STARTMENU_EXIT);
+        return;
+    }
+
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
         AppendToStartMenuItems(STARTMENU_POKEDEX);
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)

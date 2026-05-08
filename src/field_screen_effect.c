@@ -33,6 +33,7 @@ static const u8 sWhiteoutTextColors[] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHI
 
 static void Task_EnableScriptAfterMusicFade(u8 taskId);
 static void Task_BarnDoorWipeChild(u8 taskId);
+static void Task_FireRedLLMChallengeLoss(u8 taskId);
 
 static void SetFlashScanlineEffectWindowBoundary(u16 *dest, u32 y, s32 left, s32 right)
 {
@@ -458,5 +459,33 @@ void FieldCB_RushInjuredPokemonToCenter(void)
     LockPlayerFieldControls();
     palette_bg_faded_fill_black();
     taskId = CreateTask(Task_RushInjuredPokemonToCenter, 10);
+    gTasks[taskId].tState = 0;
+}
+
+static void Task_FireRedLLMChallengeLoss(u8 taskId)
+{
+    switch (gTasks[taskId].tState)
+    {
+    case 0:
+        FadeInFromBlack();
+        gTasks[taskId].tState++;
+        break;
+    case 1:
+        if (FieldFadeTransitionBackgroundEffectIsFinished() == TRUE)
+        {
+            DestroyTask(taskId);
+            ScriptContext_SetupScript(FireRedLLM_EventScript_AfterWhiteOutLoss);
+        }
+        break;
+    }
+}
+
+void FieldCB_FireRedLLMChallengeLoss(void)
+{
+    u8 taskId;
+
+    LockPlayerFieldControls();
+    palette_bg_faded_fill_black();
+    taskId = CreateTask(Task_FireRedLLMChallengeLoss, 10);
     gTasks[taskId].tState = 0;
 }

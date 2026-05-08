@@ -47,6 +47,7 @@ struct OakSpeechResources
 static EWRAM_DATA struct OakSpeechResources *sOakSpeechResources = NULL;
 
 static void Task_NewGameScene(u8);
+static void Task_NewGameScene_SkipIntro(u8);
 
 static void ControlsGuide_LoadPage1(void);
 static void Task_ControlsGuide_HandleInput(u8);
@@ -725,7 +726,8 @@ static void Task_NewGameScene(u8 taskId)
     case 1:
         sOakSpeechResources = AllocZeroed(sizeof(*sOakSpeechResources));
         CreateMonSpritesGfxManager(1, 1);
-        break;
+        gTasks[taskId].func = Task_NewGameScene_SkipIntro;
+        return;
     case 2:
         SetGpuReg(REG_OFFSET_WIN0H, 0);
         SetGpuReg(REG_OFFSET_WIN0V, 0);
@@ -792,6 +794,13 @@ static void Task_NewGameScene(u8 taskId)
     }
 
     gMain.state++;
+}
+
+static void Task_NewGameScene_SkipIntro(u8 taskId)
+{
+    // Defer teardown to the next task tick so the scene callback can finish
+    // the current frame before freeing Oak Speech resources.
+    gTasks[taskId].func = Task_OakSpeech_FreeResources;
 }
 
 static void ControlsGuide_LoadPage1(void)

@@ -13,6 +13,7 @@
 #include "field_message_box.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
+#include "fire_red_llm_challenge.h"
 #include "field_specials.h"
 #include "field_tasks.h"
 #include "field_weather.h"
@@ -250,6 +251,15 @@ static const u16 sWhiteOutMoneyLossBadgeFlagIDs[] = {
 static void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_ResetEliteFourEnd);
+    if (FireRedLLM_IsChallengeActive() == TRUE)
+    {
+        FireRedLLM_MarkChallengeLost();
+        Overworld_ResetStateAfterWhitingOut();
+        SetWarpDestination(MAP_GROUP(MAP_PEWTER_CITY_GYM), MAP_NUM(MAP_PEWTER_CITY_GYM), -1, 6, 13);
+        WarpIntoMap();
+        return;
+    }
+
     RemoveMoney(&gSaveBlock1Ptr->money, ComputeWhiteOutMoneyLoss());
     HealPlayerParty();
     Overworld_ResetStateAfterWhitingOut();
@@ -1555,7 +1565,10 @@ void CB2_WhiteOut(void)
         SetInitialPlayerAvatarStateWithDirection(DIR_NORTH);
         ScriptContext_Init();
         UnlockPlayerFieldControls();
-        gFieldCallback = FieldCB_RushInjuredPokemonToCenter;
+        if (FireRedLLM_IsChallengeLost() == TRUE)
+            gFieldCallback = FieldCB_FireRedLLMChallengeLoss;
+        else
+            gFieldCallback = FieldCB_RushInjuredPokemonToCenter;
         val = 0;
         DoMapLoadLoop(&val);
         QuestLog_CutRecording();

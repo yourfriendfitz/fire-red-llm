@@ -137,7 +137,7 @@ MAKEFLAGS += --no-print-directory
 ALL_BUILDS := firered firered_rev1 firered_rev10 leafgreen leafgreen_rev1 leafgreen_rev10
 ALL_BUILDS += $(ALL_BUILDS:%=%_modern)
 
-RULES_NO_SCAN += clean clean-assets tidy generated clean-generated compose-config rom-shell rom-build milestone0-check milestone1-check
+RULES_NO_SCAN += clean clean-assets tidy generated clean-generated compose-config rom-shell rom-build hack-rom-build milestone0-check milestone1-check milestone2-check
 .PHONY: all rom modern compare $(ALL_BUILDS) $(ALL_BUILDS:%=compare_%)
 .PHONY: $(RULES_NO_SCAN)
 
@@ -425,6 +425,9 @@ rom-shell:
 rom-build:
 	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build ./scripts/build-rom.sh
 
+hack-rom-build:
+	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build bash ./scripts/build-hack-rom.sh
+
 milestone1-check: compose-config
 	test -f docker/Dockerfile.pokefirered
 	test -f compose.yaml
@@ -432,5 +435,16 @@ milestone1-check: compose-config
 	test -f scripts/build-rom.sh
 	$(DOCKER_COMPOSE_WITH_HOST) build rom-build
 	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build ./scripts/build-rom.sh
+	git diff --check origin/master...HEAD
+	git diff --check
+
+milestone2-check: compose-config
+	test -f docs/milestone-2.md
+	test -f include/fire_red_llm_challenge.h
+	test -f include/constants/fire_red_llm_challenge.h
+	test -f src/fire_red_llm_challenge.c
+	test -f scripts/build-hack-rom.sh
+	$(DOCKER_COMPOSE_WITH_HOST) build rom-build
+	$(DOCKER_COMPOSE_WITH_HOST) run --rm rom-build bash ./scripts/build-hack-rom.sh
 	git diff --check origin/master...HEAD
 	git diff --check
