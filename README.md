@@ -8,11 +8,12 @@ Project docs:
 - [docs/development.md](docs/development.md): branch-per-milestone workflow and container-first development rules.
 - [docs/milestone-0.md](docs/milestone-0.md): repo foundation milestone.
 - [docs/milestone-1.md](docs/milestone-1.md): containerized ROM build milestone.
+- [docs/milestone-2.md](docs/milestone-2.md): playable Pewter Gym challenge milestone.
 
 Current verification:
 
 ```bash
-make milestone1-check
+make milestone2-check
 ```
 
 The upstream decompilation builds from source. Do not commit generated ROM outputs or any local ROM files.

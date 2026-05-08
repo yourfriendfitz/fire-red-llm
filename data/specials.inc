@@ -9,6 +9,8 @@
 	.align 2
 gSpecials::
 	def_special HealPlayerParty
+	def_special FireRedLLM_HealAndEnforceLevelCap
+	def_special FireRedLLM_CompleteChallenge
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp
 	def_special ReturnFromLinkRoom

@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-The repository is in Milestone 1. The current work is a containerized vanilla ROM build.
+The repository is in Milestone 2. The current work is the playable Pewter Gym challenge ROM.
 
 Current workflow goals:
 
@@ -63,7 +63,7 @@ ai/                Future controller, bridge, policy, and evaluation code
 
 Do not install host system packages for this project unless the user explicitly asks.
 
-Milestone 1 should provide a container workflow for:
+Milestone 1 provides a container workflow for:
 
 - building or installing `agbcc`,
 - running the vanilla ROM build,
@@ -80,14 +80,21 @@ Useful container targets:
 
 ```bash
 make rom-build
+make hack-rom-build
 make rom-shell
 ```
 
 `make rom-build` installs the pinned `agbcc` toolchain if needed, runs upstream `make compare`, and verifies the generated `pokefirered.gba` hash.
 
+`make hack-rom-build` installs the pinned `agbcc` toolchain if needed and runs `make rom` without upstream byte-for-byte compare. Use it for ROM hack milestones after source behavior intentionally diverges from vanilla.
+
 The Makefile passes `HOST_UID` and `HOST_GID` into Compose so files written through the bind mount stay owned by the host user. Override them only when intentionally building as a different host user.
 
-Milestone checks should avoid touching ROM build artifacts unless that milestone explicitly verifies a ROM build.
+Milestone checks should avoid touching ROM build artifacts unless that milestone explicitly verifies a ROM build. Milestone 2 verifies the hacked ROM build with:
+
+```bash
+make milestone2-check
+```
 
 ## ROM Artifact Handling
 

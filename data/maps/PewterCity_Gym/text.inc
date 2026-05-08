@@ -79,6 +79,32 @@ PewterCity_Gym_Text_LiamPostBattle::
     .string "You're pretty hot.\n"
     .string "…But not as hot as BROCK!$"
 
+PewterCity_Gym_Text_ChallengeIntro::
+    .string "FIRE RED LLM CHALLENGE\n"
+    .string "SEED: F17E\p"
+    .string "Two random POKEMON were chosen\n"
+    .string "at BROCK's Lv. 14 cap.\p"
+    .string "Beat LIAM, then BROCK.\n"
+    .string "The GYM doors are locked.$"
+
+PewterCity_Gym_Text_ChallengeAutoHeal::
+    .string "Challenge rule active:\n"
+    .string "Your party was healed and capped.$"
+
+PewterCity_Gym_Text_ChallengeExitBlocked::
+    .string "The challenge has started.\n"
+    .string "BROCK must be defeated first.$"
+
+PewterCity_Gym_Text_ChallengeComplete::
+    .string "Challenge complete!\p"
+    .string "BROCK has fallen, and this run\n"
+    .string "is recorded as a victory.$"
+
+PewterCity_Gym_Text_ChallengeLost::
+    .string "Challenge failed.\p"
+    .string "Your party was restored, but this\n"
+    .string "run is recorded as a loss.$"
+
 PewterCity_Gym_Text_LetMeTakeYouToTheTop::
     .string "Hiya!\n"
     .string "Do you want to dream big?\p"
@@ -119,4 +145,3 @@ PewterCity_Gym_Text_GymStatuePlayerWon::
     .string "LEADER: BROCK\p"
     .string "WINNING TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
-
