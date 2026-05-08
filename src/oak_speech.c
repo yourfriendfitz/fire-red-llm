@@ -47,6 +47,7 @@ struct OakSpeechResources
 static EWRAM_DATA struct OakSpeechResources *sOakSpeechResources = NULL;
 
 static void Task_NewGameScene(u8);
+static void Task_NewGameScene_SkipIntro(u8);
 
 static void ControlsGuide_LoadPage1(void);
 static void Task_ControlsGuide_HandleInput(u8);
@@ -687,7 +688,8 @@ void StartNewGameScene(void)
 {
     gPlttBufferUnfaded[0] = RGB_BLACK;
     gPlttBufferFaded[0]   = RGB_BLACK;
-    SetMainCallback2(CB2_NewGame);
+    CreateTask(Task_NewGameScene, 0);
+    SetMainCallback2(CB2_NewGameScene);
 }
 
 #define tSpriteTimer                data[0]
@@ -724,7 +726,8 @@ static void Task_NewGameScene(u8 taskId)
     case 1:
         sOakSpeechResources = AllocZeroed(sizeof(*sOakSpeechResources));
         CreateMonSpritesGfxManager(1, 1);
-        break;
+        gTasks[taskId].func = Task_NewGameScene_SkipIntro;
+        return;
     case 2:
         SetGpuReg(REG_OFFSET_WIN0H, 0);
         SetGpuReg(REG_OFFSET_WIN0V, 0);
@@ -791,6 +794,11 @@ static void Task_NewGameScene(u8 taskId)
     }
 
     gMain.state++;
+}
+
+static void Task_NewGameScene_SkipIntro(u8 taskId)
+{
+    Task_OakSpeech_FreeResources(taskId);
 }
 
 static void ControlsGuide_LoadPage1(void)
