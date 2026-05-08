@@ -73,3 +73,6 @@ clarifying-questions*.md
 AGENTS.md
 docs/decisions.md
 .agent/
+
+# Local fetched toolchain source
+third_party/agbcc/

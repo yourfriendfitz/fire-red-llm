@@ -45,7 +45,7 @@ Secondary user: an engineer extending the ROM hack, AI controller, or emulator h
 - User-controlled menus, saving, PC usage, shops, Pokemon Center trips, or Bag item decisions.
 - Training, grinding, catching Pokemon, or party management outside the challenge.
 - Letting the LLM directly mutate ROM memory or call arbitrary emulator commands.
-- Shipping copyrighted base ROM files in the repository.
+- Shipping copyrighted base ROM files, generated ROM binaries, or local emulator state in the repository.
 
 ## 6. Initial Technical Decisions
 
@@ -321,7 +321,7 @@ Expected local workflow:
 - Optional host GUI mGBA path for watching the run; this is allowed as a user-facing runtime convenience, while build and automated checks remain container-first.
 - Local LLM server path using `llama-server` with a Qwen3-0.6B GGUF artifact supplied outside git and pinned by filename/hash in local config.
 
-The repository must not include a copyrighted base ROM. Any required `baserom.gba` or equivalent file should be documented as a user-provided local input and ignored by git.
+The upstream `pret/pokefirered` decompilation builds from source and does not require a user-provided base ROM. Generated ROM outputs and local ROM files must remain ignored.
 
 ## 14. Testing And Verification
 
@@ -366,7 +366,7 @@ Deliverables:
 - Upstream `pret/pokefirered` fork/vendor strategy selected.
 - Repo-specific development notes documented.
 - Container-first build plan documented.
-- Legal base ROM handling documented.
+- ROM artifact handling documented.
 
 Acceptance criteria:
 
@@ -380,15 +380,15 @@ Deliverables:
 
 - Container image or compose service for the FireRed build toolchain.
 - Build command for upstream/unmodified ROM target.
-- Build command for the hacked ROM target.
-- Git-ignored local placement for required base ROM input.
+- Container workflow that future hacked ROM targets can reuse.
+- Git-ignored local placement for generated ROM artifacts.
 - Basic documentation for build commands.
 
 Acceptance criteria:
 
 - ROM build runs through one documented container command.
 - Build artifacts are emitted to a predictable ignored path.
-- Missing base ROM produces a clear error message.
+- Vanilla FireRed comparison succeeds through the container workflow.
 
 ### Milestone 2: Playable Pewter Gym Challenge ROM
 
