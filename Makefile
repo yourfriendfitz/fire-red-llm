@@ -132,7 +132,7 @@ MAKEFLAGS += --no-print-directory
 ALL_BUILDS := firered firered_rev1 firered_rev10 leafgreen leafgreen_rev1 leafgreen_rev10
 ALL_BUILDS += $(ALL_BUILDS:%=%_modern)
 
-RULES_NO_SCAN += clean clean-assets tidy generated clean-generated
+RULES_NO_SCAN += clean clean-assets tidy generated clean-generated milestone0-check
 .PHONY: all rom modern compare $(ALL_BUILDS) $(ALL_BUILDS:%=compare_%)
 .PHONY: $(RULES_NO_SCAN)
 
@@ -193,7 +193,9 @@ OBJS     := $(C_OBJS) $(C_ASM_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(SONG_OBJS) $(
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
 
 SUBDIRS  := $(sort $(dir $(OBJS)))
+ifeq ($(SETUP_PREREQS),1)
 $(shell mkdir -p $(SUBDIRS))
+endif
 
 # Pretend rules that are actually flags defer to `make all`
 modern: all
@@ -397,3 +399,14 @@ $(ROM): $(ELF)
 # Symbol file (`make syms`)
 $(SYM): $(ELF)
 	$(OBJDUMP) -t $< | sort -u | grep -E "^0[2389]" | $(PERL) -p -e 's/^(\w{8}) (\w).{6} \S+\t(\w{8}) (\S+)$$/\1 \2 \3 \4/g' > $@
+
+milestone0-check:
+	test -f README.md
+	test -f spec.md
+	test -f docs/development.md
+	test -f docs/milestone-0.md
+	test -f docs/milestone-1.md
+	git remote get-url origin
+	git remote get-url upstream
+	git diff --check origin/master...HEAD
+	git diff --check
