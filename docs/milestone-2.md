@@ -9,6 +9,7 @@ Make the ROM itself launch into a deterministic Pewter Gym challenge after New G
 - New Game now initializes the challenge and warps directly to Pewter Gym.
 - The player receives two seeded, random level-14 Pokemon from a curated non-legendary pool.
 - Generated Pokemon receive seeded passive held items.
+- The title-screen Help System is disabled so smoke tests cannot get trapped before New Game.
 - The start menu hides Bag and Save while the challenge is active.
 - Gym exits are blocked by map coordinate scripts.
 - Winning against Camper Liam heals the party and clamps levels back to Brock's level cap.

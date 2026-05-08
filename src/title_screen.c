@@ -624,7 +624,7 @@ static void SetTitleScreenScene_Run(s16 *data)
 #endif
         SetGpuRegsForTitleScreenRun();
         tSlashSpriteId = CreateSlashSprite();
-        HelpSystem_Enable();
+        HelpSystem_Disable();
         tState++;
         // fallthrough
     case 1:
